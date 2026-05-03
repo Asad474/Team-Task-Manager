@@ -14,7 +14,7 @@ export const register = async (req: Request, res: Response) => {
 
   sendResponse(res, {
     statusCode: httpStatusCode.CREATED,
-    data: { user: result.user },
+    data: { user: result.user, token: result.token },
     message: authMessages.REGISTER_SUCCESS,
     success: true,
   });
@@ -27,6 +27,7 @@ export const login = async (req: Request, res: Response) => {
 
   sendResponse(res, {
     statusCode: httpStatusCode.OK,
+    data: { token: result.token },
     message: authMessages.LOGIN_SUCCESS,
     success: true,
   });
