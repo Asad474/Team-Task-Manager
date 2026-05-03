@@ -1,15 +1,16 @@
 {
   "steps": {
     "build": {
+      "workingDirectory": "backend",
       "commands": ["npm install", "npm run build"]
     }
   },
   "deploy": {
-    "startCommand": "node dist/server.js",
+    "startCommand": "cd backend && node dist/server.js",
     "inputs": [
       {
         "step": "build",
-        "include": ["dist/**"]
+        "include": ["backend/dist/**"]
       }
     ]
   }

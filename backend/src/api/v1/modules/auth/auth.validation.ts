@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { UserRole } from '../../../../constants/roles.constants';
 
 export const registerSchema = z.object({
   body: z.object({
@@ -12,7 +13,7 @@ export const registerSchema = z.object({
       .string()
       .min(6, 'Password must be at least 6 characters')
       .regex(/^(?=.*[A-Za-z])(?=.*\d)/, 'Password must contain at least one letter and one number'),
-    role: z.enum(['admin', 'member']).optional().default('member'),
+    role: z.enum(UserRole).optional().default(UserRole.MEMBER),
   }),
 });
 
