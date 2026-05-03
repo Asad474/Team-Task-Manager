@@ -1,5 +1,16 @@
 {
+  "steps": {
+    "build": {
+      "commands": ["npm install", "npm run build"]
+    }
+  },
   "deploy": {
-    "startCommand": "node dist/server.js"
+    "startCommand": "node dist/server.js",
+    "inputs": [
+      {
+        "step": "build",
+        "include": ["dist/**"]
+      }
+    ]
   }
 }
