@@ -1,31 +1,14 @@
-# Build stage
-FROM node:22-alpine AS builder
-
-WORKDIR /app
-
-# Copy package files
-COPY package*.json ./
-
-# Install dependencies
-RUN npm install
-
-# Copy source code
-COPY . .
-
-# Build the project
-RUN npm run build
-
-# Production stage - Nginx
 FROM nginx:stable-alpine
 
-# Copy built files from builder stage to nginx public folder
-COPY --from=builder /app/dist /usr/share/nginx/html
+# Copy your static files
+COPY . /usr/share/nginx/html
 
-# Copy custom nginx config if needed (optional)
-# COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Copy a custom Nginx config template
+RUN rm /etc/nginx/conf.d/default.conf
+COPY nginx.conf.template /etc/nginx/templates/default.conf.template
 
-# Expose port 80
-EXPOSE 80
+# Expose the dynamic port
+EXPOSE $PORT
 
-# Start nginx
+# Nginx will automatically substitute $PORT when starting
 CMD ["nginx", "-g", "daemon off;"]
