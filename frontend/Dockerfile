@@ -3,12 +3,17 @@ FROM nginx:stable-alpine
 # Copy your static files
 COPY . /usr/share/nginx/html
 
-# Copy a custom Nginx config template
-RUN rm /etc/nginx/conf.d/default.conf
-COPY nginx.conf.template /etc/nginx/templates/default.conf.template
+# Create config directly in conf.d directory (no template needed)
+RUN echo 'server { \
+    listen 80; \
+    server_name localhost; \
+    root /usr/share/nginx/html; \
+    index index.html; \
+    location / { \
+        try_files $uri $uri/ /index.html; \
+    } \
+}' > /etc/nginx/conf.d/default.conf
 
-# Expose the dynamic port
-EXPOSE $PORT
+EXPOSE 80
 
-# Nginx will automatically substitute $PORT when starting
 CMD ["nginx", "-g", "daemon off;"]
