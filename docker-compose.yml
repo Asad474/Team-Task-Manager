@@ -12,15 +12,6 @@ services:
     depends_on:
       - mongodb
 
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    ports:
-      - "80:80"
-    depends_on:
-      - backend
-
   mongodb:
     image: mongo:latest
     ports:
